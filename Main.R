@@ -44,4 +44,7 @@ x <- c("Year", "Austria", "Australia", "Belgium", "Canada", "Switzerland",
        "Slovak Republic", "Slovenia", "Sweeden", "Turkey", "United States")
 colnames(debtdata) <- x
 
-
+# 6. Sustainability Analysis
+source("simsTest.R")
+sust_indicators <- lapply(debtdata[, 2:6], simsTest, alpha = 0.2)
+print(sust_indicators)
