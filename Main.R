@@ -19,9 +19,19 @@ if(!("ggplot2" %in% rownames(installed.packages()))) {
 
 library(ggplot2)
 
+cond <- debtdata$CountryCode == "COL" | debtdata$CountryCode == "EST" |
+        debtdata$CountryCode == "FIN" | debtdata$CountryCode == "HUN" |
+        debtdata$CountryCode == "ISL" | debtdata$CountryCode == "LTU" | 
+        debtdata$CountryCode == "LVA" | debtdata$CountryCode == "SVK" | 
+        debtdata$CountryCode == "SVN" | debtdata$CountryCode == "TUR"
+
+debtdata <- debtdata[!cond, ]
+
+
 ggplot(debtdata, aes(x = CountryCode, y = as.numeric(DebtRatio))) + 
         geom_boxplot() + theme(axis.text.x = element_text(angle = 90)) +
         xlab("OECD Countries") + ylab("Debt to GDP Ratio")
+
 
 # 3. Reshape data
 if (!("reshape2" %in% rownames(installed.packages()))) {
@@ -37,14 +47,17 @@ debtdata$Year <- year
 
 # 5. Assign country names to columns in dataset
 x <- c("Year", "Austria", "Australia", "Belgium", "Canada", "Switzerland", 
-       "Chile", "Czech Republic", "Germany", "Denmark", "Spain", "Estonia", 
-       "Finland", "France", "United Kingdom", "Greece", "Hungary",
-       "Ireland", "Iceland", "Israel", "Italy", "Japan", "Lithuania", "Luxemburg",
-       "Latvia", "Mexico", "Netherlands", "Norway", "Poland", "Portugal",
-       "Slovak Republic", "Slovenia", "Sweeden", "Turkey", "United States")
+       "Chile", "Czech Republic", "Germany", "Denmark", "Spain",  
+       "France", "United Kingdom", "Greece","Ireland", "Israel", 
+       "Italy", "Japan", "Luxemburg", "Mexico", "Netherlands", "Norway", 
+       "Poland", "Portugal", "Sweeden", "United States")
 colnames(debtdata) <- x
 
 # 6. Sustainability Analysis
+# Perform the Sims Bayesian Test
 source("simsTest.R")
-sust_indicators <- lapply(debtdata[, 2:6], simsTest, alpha = 0.2)
-print(sust_indicators)
+sust_sims <- lapply(debtdata[, -1], simsTest, alpha = 0.5, method = "ML")
+
+# Perform the ADF Test for Sustainability
+source("adfSust.R")
+sust_adf <- lapply(debtdata[, -1], adfSust)
