@@ -1,0 +1,24 @@
+---
+title: "Debt Sustainability with Bayesian Unit Root Tests"
+author: "Rolando Gonzales and Oscar Martinez"
+date: "April 2020"
+output: pdf_document
+abstract : We evaluate the debt sustainability of a panel of OECD countries from 1995 - 2019 (some countries have shorter data) using a Bayesian Unit Root Test proposed by Sims under the Present Value condition of the Government Budget Constraint. We find striking different results compared with traditional Unit Root Tests like ADF.
+bibliography : papers.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1.Introduction 
+
+We base our analysis in @Cochrane1991
+
+## 2.Debt Sustainability under the Bayesian Unit Root Test of Sims
+
+## 3.Results
+
+## 4.Conclusions
+
+## References
